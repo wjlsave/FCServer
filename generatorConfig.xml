@@ -6,6 +6,7 @@
     <context id="DB2Tables" targetRuntime="MyBatis3">  
         <commentGenerator>
             <!-- 是否警告 -->
+            
             <property name="suppressTypeWarnings" value="false" />
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true" />
