@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SysUser implements Serializable{
-    /**
-	 * 
-	 */
+  
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -19,21 +17,9 @@ public class SysUser implements Serializable{
 
     private Date lastLoginTime;
 
-    private Boolean enabled;
-
-    private Boolean accountNotExpired;
-
-    private Boolean accountNotLocked;
-
-    private Boolean credentialsNotExpired;
+    private Integer state;
 
     private Date createTime;
-
-    private Date updateTime;
-
-    private Integer createUser;
-
-    private Integer updateUser;
 
     public Integer getId() {
         return id;
@@ -75,36 +61,12 @@ public class SysUser implements Serializable{
         this.lastLoginTime = lastLoginTime;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
+    public Integer getState() {
+        return state;
     }
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Boolean getAccountNotExpired() {
-        return accountNotExpired;
-    }
-
-    public void setAccountNotExpired(Boolean accountNotExpired) {
-        this.accountNotExpired = accountNotExpired;
-    }
-
-    public Boolean getAccountNotLocked() {
-        return accountNotLocked;
-    }
-
-    public void setAccountNotLocked(Boolean accountNotLocked) {
-        this.accountNotLocked = accountNotLocked;
-    }
-
-    public Boolean getCredentialsNotExpired() {
-        return credentialsNotExpired;
-    }
-
-    public void setCredentialsNotExpired(Boolean credentialsNotExpired) {
-        this.credentialsNotExpired = credentialsNotExpired;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Date getCreateTime() {
@@ -113,29 +75,5 @@ public class SysUser implements Serializable{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Integer createUser) {
-        this.createUser = createUser;
-    }
-
-    public Integer getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(Integer updateUser) {
-        this.updateUser = updateUser;
     }
 }
