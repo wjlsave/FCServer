@@ -33,13 +33,13 @@
     from sys_user
     <where>
     	<if test="account != null">
-	         account like CONCAT('%',#{account,jdbcType=VARCHAR},'%')
+	        account like CONCAT('%',#{account,jdbcType=VARCHAR},'%')
 	    </if> 
 	    <if test="userName != null">
-	         user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+	        AND user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
 	    </if> 
 	   <if test="state != null">
-        	state = #{state,jdbcType=INTEGER},
+        	AND state = #{state,jdbcType=INTEGER}
       	</if>
 	  </where>
   </select>
