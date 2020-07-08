@@ -1,23 +1,29 @@
 package com.project.wjl.fcserver.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.project.wjl.fcserver.model.SysUser;
 
 @Mapper
 public interface SysUserMapper {
-	
-	SysUser selectByAccount(String account);
-	
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(SysUser record);
-
-    int insertSelective(SysUser record);
-
+	    
     SysUser selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(SysUser record);
-
-    int updateByPrimaryKey(SysUser record);
+    
+    SysUser selectByAccount(String account);
+    
+    List<SysUser> queryByPage(SysUser record); 
+    
+    int deleteByPrimaryKey(Integer id);
+    
+    int deleteRelationByUserid(Integer userid);
+	
+	int insertSelective(SysUser record);
+	
+	int insertRolesBatch(@Param("userid")Integer userid,@Param("roleidlist")int[] roleidlist);
+	
+	int updateByPrimaryKeySelective(SysUser record);
+    
 }

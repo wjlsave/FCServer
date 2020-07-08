@@ -1,6 +1,5 @@
 package com.project.wjl.fcserver.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.wjl.fcserver.model.SysUser;
-import com.project.wjl.fcserver.service.SysUserService;
+import com.project.wjl.fcserver.service.LoginService;
 import com.project.wjl.fcserver.util.Result;
 
 @RestController
-public class SystemUserController {
-	
+public class LoginController {
+
 	@Resource
-	private SysUserService sysUserService;
+	private LoginService loginService;
 
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping("login")
 	public Result<String> login(Result<String> result,String account,String password){
-		result = sysUserService.login(result, account, password);
+		result = loginService.login(result, account, password);
 		return result;
 	}
 	
