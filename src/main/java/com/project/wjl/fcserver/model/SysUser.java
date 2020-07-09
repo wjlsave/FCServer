@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.wjl.fcserver.validate.annotation.IsState;
@@ -21,12 +22,15 @@ public class SysUser implements Serializable{
 	private Integer id;
 
 	@NotNull(message = "account不可为空",groups = {AddGroup.class,EditGroup.class})
+	@Size(message = "account的长度超过了50",max = 50,groups = {ParamGroup.class,AddGroup.class,EditGroup.class})
     private String account;
 
     @NotNull(message = "userName不可为空",groups = {AddGroup.class,EditGroup.class})
+    @Size(message = "userName的长度超过了50",max = 50,groups = {ParamGroup.class,AddGroup.class,EditGroup.class})
     private String userName;
 
     @NotNull(message = "password不可为空",groups = {AddGroup.class,EditGroup.class})
+    @Size(message = "userName的长度超过了100",max = 100,groups = {AddGroup.class,EditGroup.class})
     private String password;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -35,7 +39,7 @@ public class SysUser implements Serializable{
     @IsState(groups = {ParamGroup.class,AddGroup.class,EditGroup.class})
     private Integer state;
 
-    @Null(message = "createTime不可修改",groups = {AddGroup.class,EditGroup.class})
+    @Null(message = "createTime不可传",groups = {AddGroup.class,EditGroup.class})
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
