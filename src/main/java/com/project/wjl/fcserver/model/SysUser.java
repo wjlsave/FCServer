@@ -3,22 +3,40 @@ package com.project.wjl.fcserver.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.wjl.fcserver.validate.annotation.IsState;
+import com.project.wjl.fcserver.validate.group.AddGroup;
+import com.project.wjl.fcserver.validate.group.EditGroup;
+import com.project.wjl.fcserver.validate.group.ParamGroup;
+
 public class SysUser implements Serializable{
   
 	private static final long serialVersionUID = 1L;
 
+	@Null(message = "增加时不要传id",groups = {AddGroup.class})
+	@NotNull(message = "id不可为空",groups = {EditGroup.class})
 	private Integer id;
 
+	@NotNull(message = "account不可为空",groups = {AddGroup.class,EditGroup.class})
     private String account;
 
+    @NotNull(message = "userName不可为空",groups = {AddGroup.class,EditGroup.class})
     private String userName;
 
+    @NotNull(message = "password不可为空",groups = {AddGroup.class,EditGroup.class})
     private String password;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date lastLoginTime;
 
+    @IsState(groups = {ParamGroup.class,AddGroup.class,EditGroup.class})
     private Integer state;
 
+    @Null(message = "createTime不可修改",groups = {AddGroup.class,EditGroup.class})
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     public Integer getId() {

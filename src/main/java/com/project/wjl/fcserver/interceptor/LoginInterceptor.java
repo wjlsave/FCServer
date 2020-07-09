@@ -23,7 +23,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		//添加这行代码，让OPTIONS请求通过
 		if (request.getMethod().equals("OPTIONS")) {
 			response.setStatus(HttpServletResponse.SC_OK);
 		    return true;
@@ -34,10 +33,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return false;
 		}else {
 			SysUser sysUser = (SysUser)redisTemplate.opsForValue().get("USER_"+token);
-			redisTemplate.expire("USER_"+token, 60 * 10, TimeUnit.SECONDS);
+			redisTemplate.expire("USER_"+token, 60 * 60 *24, TimeUnit.SECONDS);
 			request.setAttribute("sysUser", sysUser);
 		}
-		
 		return true;
 	}
 
