@@ -29,8 +29,7 @@ public class SysUser implements Serializable{
     @Size(message = "userName的长度超过了50",max = 50,groups = {ParamGroup.class,AddGroup.class,EditGroup.class})
     private String userName;
 
-    @NotNull(message = "password不可为空",groups = {AddGroup.class,EditGroup.class})
-    @Size(message = "userName的长度超过了100",max = 100,groups = {AddGroup.class,EditGroup.class})
+    @Size(message = "password的长度超过了100",max = 100,groups = {AddGroup.class,EditGroup.class})
     private String password;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")

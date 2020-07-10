@@ -40,8 +40,11 @@ public class SysUserController {
 	}
 	
 	@RequestMapping(value = "add",method = RequestMethod.POST)
-	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysUser record,@Pattern(message = "roleids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)+$")String roleids){
-		String[] roleidlist = roleids.split(",");
+	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysUser record,@Pattern(message = "roleids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String roleids){
+		String[] roleidlist = {};
+		if(roleids!=null) {
+			roleidlist = roleids.split(",");
+		}
 		int[] roleidary = new int[roleidlist.length];
 		try {
 			for(int i=0;i<roleidlist.length;i++) {
@@ -60,8 +63,11 @@ public class SysUserController {
 	}
 	
 	@RequestMapping(value = "edit",method = RequestMethod.POST)
-	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysUser record,@Pattern(message = "roleids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)+$")String roleids){
-		String[] roleidlist = roleids.split(",");
+	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysUser record,@Pattern(message = "roleids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String roleids){
+		String[] roleidlist = {};
+		if(roleids!=null) {
+			roleidlist = roleids.split(",");
+		}
 		int[] roleidary = new int[roleidlist.length];
 		try {
 			for(int i=0;i<roleidlist.length;i++) {
