@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -19,6 +20,9 @@ public class SysUserService {
 	
 	@Resource
 	private SysUserMapper sysUserMapper;
+	
+	@Value("${app.defaultPassword}")
+	String password;
 	
 	public Result<PageInfo<SysUser>> pagelist(Result<PageInfo<SysUser>> result,SysUser record,int pageNum,int pageSize){
 		PageHelper.startPage(pageNum, pageSize);
@@ -42,10 +46,12 @@ public class SysUserService {
 			result.errorResult(2003, "账号名已存在");
 			return result;
 		}
-		String password = DigestUtils.md5DigestAsHex(record.getPassword().getBytes());
-		record.setPassword(password);
+		System.out.println("================"+password);
+		record.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
 		sysUserMapper.insertSelective(record);
-		sysUserMapper.insertRolesBatch(record.getId(), roleidary);
+		if(roleidary.length>0) {
+			sysUserMapper.insertRolesBatch(record.getId(), roleidary);
+		}
 		return result;
 	}
 	
@@ -56,11 +62,16 @@ public class SysUserService {
 			result.errorResult(2003, "账号名已存在");
 			return result;
 		}
-		String password = DigestUtils.md5DigestAsHex(record.getPassword().getBytes());
-		record.setPassword(password);
+		/*
+		 * String password =
+		 * DigestUtils.md5DigestAsHex(record.getPassword().getBytes());
+		 * record.setPassword(password);
+		 */
 		sysUserMapper.updateByPrimaryKeySelective(record);
 		sysUserMapper.deleteRelationByUserid(record.getId());
-		sysUserMapper.insertRolesBatch(record.getId(), roleidary);
+		if(roleidary.length>0) {
+			sysUserMapper.insertRolesBatch(record.getId(), roleidary);
+		}
 		return result;
 	}
 	

@@ -25,17 +25,17 @@ import com.project.wjl.fcserver.validate.group.ParamGroup;
 public class SysRoleController {
 	
 	@Resource
-	private  SysRoleService sysUserService;
+	private  SysRoleService sysRoleService;
 	
 	@RequestMapping(value = "pagelist",method = RequestMethod.GET)
 	public Result<PageInfo<SysRole>> pagelist(Result<PageInfo<SysRole>> result,@Validated(ParamGroup.class)SysRole record,@NotNull(message = "pageNum不能为空")Integer pageNum,@NotNull(message = "pageSize不能为空")Integer pageSize){
-		result = sysUserService.pagelist(result, record, pageNum, pageSize);
+		result = sysRoleService.pagelist(result, record, pageNum, pageSize);
 		return result;
 	}
 	
 	@RequestMapping(value = "cut",method = RequestMethod.POST)
 	public Result<Boolean> cut(Result<Boolean> result,@NotNull(message = "id不能为空")Integer id){
-		result = sysUserService.cut(result, id);
+		result = sysRoleService.cut(result, id);
 		return result;
 	}
 	
@@ -55,7 +55,7 @@ public class SysRoleController {
 			return result;
 		}
 		
-		result = sysUserService.add(result, record, resourceidary);
+		result = sysRoleService.add(result, record, resourceidary);
 		return result;
 	}
 	
