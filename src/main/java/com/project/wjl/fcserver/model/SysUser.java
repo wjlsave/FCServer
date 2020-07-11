@@ -2,6 +2,7 @@ package com.project.wjl.fcserver.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -41,6 +42,8 @@ public class SysUser implements Serializable{
     @Null(message = "createTime不可传",groups = {AddGroup.class,EditGroup.class})
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
+    
+    private List<Integer> roleids;
 
     public Integer getId() {
         return id;
@@ -97,4 +100,13 @@ public class SysUser implements Serializable{
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public List<Integer> getRoleids() {
+		return roleids;
+	}
+
+	public void setRoleids(List<Integer> roleids) {
+		this.roleids = roleids;
+	}
+
 }

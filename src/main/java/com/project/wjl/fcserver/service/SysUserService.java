@@ -32,6 +32,17 @@ public class SysUserService {
 		return result;
 	}
 	
+	public Result<SysUser> detail(Result<SysUser> result,Integer id){
+		SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
+		if(sysUser==null) {
+			result.errorResult(2004, "系统无此记录");
+			return result;
+		}
+		sysUser.setRoleids(sysUserMapper.selectRolelistByUserid(id));
+		result.setData(sysUser);
+		return result;
+	}
+	
 	@Transactional
 	public Result<Boolean> cut(Result<Boolean> result,Integer id){
 		sysUserMapper.deleteByPrimaryKey(id);
@@ -46,7 +57,6 @@ public class SysUserService {
 			result.errorResult(2003, "账号名已存在");
 			return result;
 		}
-		System.out.println("================"+password);
 		record.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
 		sysUserMapper.insertSelective(record);
 		if(roleidary.length>0) {
@@ -62,16 +72,19 @@ public class SysUserService {
 			result.errorResult(2003, "账号名已存在");
 			return result;
 		}
-		/*
-		 * String password =
-		 * DigestUtils.md5DigestAsHex(record.getPassword().getBytes());
-		 * record.setPassword(password);
-		 */
 		sysUserMapper.updateByPrimaryKeySelective(record);
 		sysUserMapper.deleteRelationByUserid(record.getId());
 		if(roleidary.length>0) {
 			sysUserMapper.insertRolesBatch(record.getId(), roleidary);
 		}
+		return result;
+	}
+	
+	public Result<Boolean> resetpassword(Result<Boolean> result,Integer id){
+		SysUser record = new SysUser();
+		record.setId(id);
+		record.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
+		sysUserMapper.updateByPrimaryKeySelective(record);
 		return result;
 	}
 	

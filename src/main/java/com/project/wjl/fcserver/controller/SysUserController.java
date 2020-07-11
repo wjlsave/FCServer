@@ -33,6 +33,12 @@ public class SysUserController {
 		return result;
 	}
 	
+	@RequestMapping(value = "detail",method = RequestMethod.GET)
+	public Result<SysUser> detail(Result<SysUser> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysUserService.detail(result, id);
+		return result;
+	}
+	
 	@RequestMapping(value = "cut",method = RequestMethod.POST)
 	public Result<Boolean> cut(Result<Boolean> result,@NotNull(message = "id不能为空")Integer id){
 		result = sysUserService.cut(result, id);
@@ -80,6 +86,13 @@ public class SysUserController {
 			result.setMsg("roleid过长");
 			return result;
 		}
+		result = sysUserService.edit(result, record, roleidary);
+		return result;
+	}
+	
+	@RequestMapping(value = "resetpassword",method = RequestMethod.POST)
+	public Result<Boolean> resetpassword(Result<Boolean> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysUserService.resetpassword(result, id);
 		return result;
 	}
 	

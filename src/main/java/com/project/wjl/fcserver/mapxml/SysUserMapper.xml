@@ -20,6 +20,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectRolelistByUserid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    role_id
+    from sys_user_role_relation
+    where user_id = #{userid,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -42,6 +49,7 @@
         	AND state = #{state,jdbcType=INTEGER}
       	</if>
 	  </where>
+	  order by id desc
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
