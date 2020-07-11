@@ -51,7 +51,7 @@
   
   <delete id="deleteRelationByUserid" parameterType="java.lang.Integer">
     delete from sys_user_role_relation
-    where userid = #{userid,jdbcType=INTEGER}
+    where user_id = #{userid,jdbcType=INTEGER}
   </delete>
   
   <insert id="insertSelective" parameterType="com.project.wjl.fcserver.model.SysUser"  keyProperty="id" useGeneratedKeys="true">
