@@ -27,10 +27,22 @@ public class SysRoleService {
 		return result;
 	}
 	
+	public Result<SysRole> detail(Result<SysRole> result,Integer id){
+		SysRole sysRole = sysRoleMapper.selectByPrimaryKey(id);
+		if(sysRole==null) {
+			result.errorResult(2004, "系统无此记录");
+			return result;
+		}
+		sysRole.setResourceids(sysRoleMapper.selectResourcelistByRoleid(id));
+		result.setData(sysRole);
+		return result;
+	}
+	
 	@Transactional
 	public Result<Boolean> cut(Result<Boolean> result,Integer id){
 		if(sysRoleMapper.selectByRoleid(id)>0) {
 			result.errorResult(3001, "该角色关联了用户,无法删除");
+			return result;
 		}
 		sysRoleMapper.deleteByPrimaryKey(id);
 		sysRoleMapper.deleteRelationByRoleid(id);
@@ -40,7 +52,9 @@ public class SysRoleService {
 	@Transactional
 	public Result<Boolean> add(Result<Boolean> result,SysRole record,int[] roleidary){
 		sysRoleMapper.insertSelective(record);
-		sysRoleMapper.insertResourcesBatch(record.getId(), roleidary);
+		if(roleidary.length>0) {
+			sysRoleMapper.insertResourcesBatch(record.getId(), roleidary);
+		}
 		return result;
 	}
 	
@@ -48,7 +62,9 @@ public class SysRoleService {
 	public Result<Boolean> edit(Result<Boolean> result,SysRole record,int[] roleidary){
 		sysRoleMapper.updateByPrimaryKeySelective(record);
 		sysRoleMapper.deleteRelationByRoleid(record.getId());
-		sysRoleMapper.insertResourcesBatch(record.getId(), roleidary);
+		if(roleidary.length>0) {
+			sysRoleMapper.insertResourcesBatch(record.getId(), roleidary);
+		}
 		return result;
 	}
 	

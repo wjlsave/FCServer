@@ -1,6 +1,7 @@
 package com.project.wjl.fcserver.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -26,6 +27,8 @@ public class SysRole {
 	@Null(message = "createTime不可传",groups = {AddGroup.class,EditGroup.class})
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createtime;
+	
+	private List<Integer> resourceids;
 
     public Integer getId() {
         return id;
@@ -58,4 +61,12 @@ public class SysRole {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+	public List<Integer> getResourceids() {
+		return resourceids;
+	}
+
+	public void setResourceids(List<Integer> resourceids) {
+		this.resourceids = resourceids;
+	}
 }

@@ -14,6 +14,8 @@ public interface SysRoleMapper {
 	
 	int selectByRoleid(Integer roleid);
 	
+	List<Integer> selectResourcelistByRoleid(Integer roleid);
+	
 	List<SysRole> queryByPage(SysRole record); 
 	 
     int deleteByPrimaryKey(Integer id);

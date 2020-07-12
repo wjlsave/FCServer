@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 import com.project.wjl.fcserver.model.SysRole;
+import com.project.wjl.fcserver.model.SysUser;
 import com.project.wjl.fcserver.service.SysRoleService;
 import com.project.wjl.fcserver.util.Result;
 import com.project.wjl.fcserver.validate.group.AddGroup;
@@ -33,6 +34,12 @@ public class SysRoleController {
 		return result;
 	}
 	
+	@RequestMapping(value = "detail",method = RequestMethod.GET)
+	public Result<SysRole> detail(Result<SysRole> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysRoleService.detail(result, id);
+		return result;
+	}
+	
 	@RequestMapping(value = "cut",method = RequestMethod.POST)
 	public Result<Boolean> cut(Result<Boolean> result,@NotNull(message = "id不能为空")Integer id){
 		result = sysRoleService.cut(result, id);
@@ -40,8 +47,11 @@ public class SysRoleController {
 	}
 	
 	@RequestMapping(value = "add",method = RequestMethod.POST)
-	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)+$")String resourceids){
-		String[] resourceidlist = resourceids.split(",");
+	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String resourceids){
+		String[] resourceidlist = {};
+		if(resourceids!=null) {
+			resourceidlist = resourceids.split(",");
+		}
 		int[] resourceidary = new int[resourceidlist.length];
 		try {
 			for(int i=0;i<resourceidlist.length;i++) {
@@ -60,8 +70,11 @@ public class SysRoleController {
 	}
 	
 	@RequestMapping(value = "edit",method = RequestMethod.POST)
-	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)+$")String resourceids){
-		String[] resourceidlist = resourceids.split(",");
+	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String resourceids){
+		String[] resourceidlist = {};
+		if(resourceids!=null) {
+			resourceidlist = resourceids.split(",");
+		}
 		int[] resourceidary = new int[resourceidlist.length];
 		try {
 			for(int i=0;i<resourceidlist.length;i++) {
@@ -74,6 +87,7 @@ public class SysRoleController {
 			result.setMsg("resourceid过长");
 			return result;
 		}
+		result = sysRoleService.edit(result, record, resourceidary);
 		return result;
 	}
 	
