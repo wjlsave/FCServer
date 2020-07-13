@@ -4,6 +4,7 @@ package com.project.wjl.fcserver.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,12 @@ public class SysResourceController {
 	@RequestMapping(value = "treelist",method = RequestMethod.GET)
 	public Result<List<SysResource>> treelist(Result<List<SysResource>> result,@Validated(ParamGroup.class)SysResource record){
 		result = sysResourceService.treelist(result, record);
+		return result;
+	}
+	
+	@RequestMapping(value = "getuserresource",method = RequestMethod.GET)
+	public Result<List<SysResource>> getuserresource(Result<List<SysResource>> result,@NotNull(message = "userid不能为空")Integer userid){
+		result = sysResourceService.getuserresource(result, userid);
 		return result;
 	}
 	

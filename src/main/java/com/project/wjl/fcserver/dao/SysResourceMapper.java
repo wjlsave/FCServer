@@ -11,6 +11,8 @@ public interface SysResourceMapper {
 	
 	List<SysResource> queryByTree(SysResource record);
 	
+	List<SysResource> selectByUserid(Integer userid);
+	
     int deleteByPrimaryKey(Integer id);
 
     int insert(SysResource record);

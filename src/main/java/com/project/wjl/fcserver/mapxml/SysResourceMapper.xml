@@ -18,6 +18,12 @@
     from sys_resource
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT DISTINCT a.* FROM `sys_resource` a 
+  	LEFT JOIN `sys_role_resource_relation` b ON a.`id`=b.`resource_id` 
+  	LEFT JOIN `sys_user_role_relation` c ON b.`role_id` = c.`role_id`
+	WHERE c.`user_id` = #{userid,jdbcType=INTEGER}
+  </select>
   <select id="queryByTree" parameterType="com.project.wjl.fcserver.model.SysResource" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

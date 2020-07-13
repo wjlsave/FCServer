@@ -23,4 +23,12 @@ public class SysResourceService {
 		result.setData(tree);
 		return result;
 	}
+	
+	public Result<List<SysResource>> getuserresource(Result<List<SysResource>> result,Integer userid){
+		List<SysResource> sysResources = sysResourceMapper.selectByUserid(userid);
+		List<SysResource> tree = TreeUtils.buildTreeNodes(sysResources, 0l);
+		result.setData(tree);
+		return result;
+	}
+	
 }
