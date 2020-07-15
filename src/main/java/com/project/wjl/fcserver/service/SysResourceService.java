@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.project.wjl.fcserver.dao.SysResourceMapper;
 import com.project.wjl.fcserver.model.SysResource;
 import com.project.wjl.fcserver.util.Result;
 import com.project.wjl.fcserver.util.TreeUtils;
+import com.project.wjl.fcserver.validate.group.AddGroup;
 
 @Service
 public class SysResourceService {
@@ -31,4 +33,8 @@ public class SysResourceService {
 		return result;
 	}
 	
+	public Result<Boolean> add(Result<Boolean> result,@Validated(AddGroup.class)SysResource record){
+		sysResourceMapper.insertSelective(record);
+		return result;
+	}
 }

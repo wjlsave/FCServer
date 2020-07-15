@@ -18,7 +18,7 @@ import com.project.wjl.fcserver.validate.impl.IsStateClass;
 
 public @interface IsState {
 	String[] values() default {"0","1"};
-    String message() default "状态格式不正确";
+    String message() default "state格式不正确";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

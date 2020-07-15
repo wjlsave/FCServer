@@ -8,11 +8,6 @@ import com.project.wjl.fcserver.model.SysResource;
 
 @Mapper
 public interface SysResourceMapper {
-	
-	List<SysResource> queryByTree(SysResource record);
-	
-	List<SysResource> selectByUserid(Integer userid);
-	
     int deleteByPrimaryKey(Integer id);
 
     int insert(SysResource record);
@@ -20,6 +15,10 @@ public interface SysResourceMapper {
     int insertSelective(SysResource record);
 
     SysResource selectByPrimaryKey(Integer id);
+    
+    List<SysResource> selectByUserid(Integer userid);
+
+    List<SysResource> queryByTree(SysResource record);
 
     int updateByPrimaryKeySelective(SysResource record);
 

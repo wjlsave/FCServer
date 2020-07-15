@@ -36,4 +36,9 @@ public class SysResourceController {
 		return result;
 	}
 	
+	@RequestMapping(value = "add",method = RequestMethod.POST)
+	public Result<Boolean> add(Result<Boolean> result,SysResource record){
+		result = sysResourceService.add(result, record);
+		return result;
+	}
 }

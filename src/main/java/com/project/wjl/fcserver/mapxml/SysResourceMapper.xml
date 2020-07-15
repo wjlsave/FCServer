@@ -3,6 +3,7 @@
 <mapper namespace="com.project.wjl.fcserver.dao.SysResourceMapper">
   <resultMap id="BaseResultMap" type="com.project.wjl.fcserver.model.SysResource">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="icon_class" jdbcType="VARCHAR" property="iconClass" />
     <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
@@ -10,7 +11,7 @@
     <result column="sort" jdbcType="INTEGER" property="sort" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, resource_name, path, parent_id, type, sort
+    id, icon_class, resource_name, path, parent_id, type, sort
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,13 +19,15 @@
     from sys_resource
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
   	SELECT DISTINCT a.* FROM `sys_resource` a 
   	LEFT JOIN `sys_role_resource_relation` b ON a.`id`=b.`resource_id` 
   	LEFT JOIN `sys_user_role_relation` c ON b.`role_id` = c.`role_id`
 	WHERE c.`user_id` = #{userid,jdbcType=INTEGER}
   </select>
-  <select id="queryByTree" parameterType="com.project.wjl.fcserver.model.SysResource" resultMap="BaseResultMap">
+
+<select id="queryByTree" parameterType="com.project.wjl.fcserver.model.SysResource" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_resource
@@ -38,23 +41,27 @@
 	  </where>
 	  order by sort
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_resource
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.project.wjl.fcserver.model.SysResource">
-    insert into sys_resource (id, resource_name, path, 
-      parent_id, type, sort
-      )
-    values (#{id,jdbcType=INTEGER}, #{resourceName,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}
-      )
+    insert into sys_resource (id, icon_class, resource_name, 
+      path, parent_id, type, 
+      sort)
+    values (#{id,jdbcType=INTEGER}, #{iconClass,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.project.wjl.fcserver.model.SysResource">
     insert into sys_resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="iconClass != null">
+        icon_class,
       </if>
       <if test="resourceName != null">
         resource_name,
@@ -76,6 +83,9 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="iconClass != null">
+        #{iconClass,jdbcType=VARCHAR},
+      </if>
       <if test="resourceName != null">
         #{resourceName,jdbcType=VARCHAR},
       </if>
@@ -96,6 +106,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.project.wjl.fcserver.model.SysResource">
     update sys_resource
     <set>
+      <if test="iconClass != null">
+        icon_class = #{iconClass,jdbcType=VARCHAR},
+      </if>
       <if test="resourceName != null">
         resource_name = #{resourceName,jdbcType=VARCHAR},
       </if>
@@ -116,7 +129,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.project.wjl.fcserver.model.SysResource">
     update sys_resource
-    set resource_name = #{resourceName,jdbcType=VARCHAR},
+    set icon_class = #{iconClass,jdbcType=VARCHAR},
+      resource_name = #{resourceName,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
