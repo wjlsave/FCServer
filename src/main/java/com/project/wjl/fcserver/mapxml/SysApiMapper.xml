@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.wjl.fcserver.dao.SysApiMapper">
+  <resultMap id="BaseResultMap" type="com.project.wjl.fcserver.model.SysApi">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="api_path" jdbcType="VARCHAR" property="apiPath" />
+    <result column="api_describe" jdbcType="VARCHAR" property="apiDescribe" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, api_path, api_describe
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_api
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryByPage" parameterType="com.project.wjl.fcserver.model.SysApi" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_api
+    <where>
+    	<if test="apiPath != null">
+	        api_path like CONCAT('%',#{apiPath,jdbcType=VARCHAR},'%')
+	    </if> 
+	  </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_api
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.project.wjl.fcserver.model.SysApi">
+    insert into sys_api
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="apiPath != null">
+        api_path,
+      </if>
+      <if test="apiDescribe != null">
+        api_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="apiPath != null">
+        #{apiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="apiDescribe != null">
+        #{apiDescribe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.wjl.fcserver.model.SysApi">
+    update sys_api
+    <set>
+      <if test="apiPath != null">
+        api_path = #{apiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="apiDescribe != null">
+        api_describe = #{apiDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

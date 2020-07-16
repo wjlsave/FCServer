@@ -34,7 +34,7 @@
             <property name="enableSubPackages" value="true" />  
         </javaClientGenerator>  
         <!-- 要生成哪些表(更改tableName表名和domainObjectName对象名就可以) -->  
-        <table tableName="sys_resource" domainObjectName="SysResource" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />  
+        <table tableName="sys_api" domainObjectName="SysApi" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />  
     </context>  
 </generatorConfiguration>
 

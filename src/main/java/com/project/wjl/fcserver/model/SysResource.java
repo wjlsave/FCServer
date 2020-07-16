@@ -27,7 +27,7 @@ public class SysResource extends TreeNode{
     @Size(message = "path的长度超过了200",max = 200,groups = {AddGroup.class,EditGroup.class})
     private String path;
 
-    @NotNull(message = "parentId不可为空",groups = {AddGroup.class,EditGroup.class})
+    @NotNull(message = "parentId不可为空",groups = {AddGroup.class})
     private Long parentId;
 
     @NotNull(message = "type不可为空",groups = {AddGroup.class,EditGroup.class})

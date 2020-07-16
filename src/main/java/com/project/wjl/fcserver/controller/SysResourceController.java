@@ -4,7 +4,9 @@ package com.project.wjl.fcserver.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.wjl.fcserver.model.SysResource;
 import com.project.wjl.fcserver.service.SysResourceService;
 import com.project.wjl.fcserver.util.Result;
+import com.project.wjl.fcserver.validate.group.AddGroup;
+import com.project.wjl.fcserver.validate.group.EditGroup;
 import com.project.wjl.fcserver.validate.group.ParamGroup;
 
 @RestController
@@ -36,9 +40,49 @@ public class SysResourceController {
 		return result;
 	}
 	
+	@RequestMapping(value = "detail",method = RequestMethod.GET)
+	public Result<SysResource> detail(Result<SysResource> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysResourceService.detail(result, id);
+		return result;
+	}
+	
+	@RequestMapping(value = "cut",method = RequestMethod.POST)
+	public Result<Boolean> cut(Result<Boolean> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysResourceService.cut(result, id);
+		return result;
+	}
+	
 	@RequestMapping(value = "add",method = RequestMethod.POST)
-	public Result<Boolean> add(Result<Boolean> result,SysResource record){
+	public Result<Boolean> add(Result<Boolean> result,@Validated(AddGroup.class)SysResource record){
 		result = sysResourceService.add(result, record);
+		return result;
+	}
+	
+	@RequestMapping(value = "edit",method = RequestMethod.POST)
+	public Result<Boolean> edit(Result<Boolean> result,@Validated(EditGroup.class)SysResource record){
+		result = sysResourceService.edit(result, record);
+		return result;
+	}
+	
+	@RequestMapping(value = "treedrag",method = RequestMethod.POST)
+	public Result<Boolean> treedrag(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "parentid不能为空")Integer parentid,@Pattern(message = "childrenids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String childrenids){
+		String[] childrenidlist = {};
+		if(childrenids!=null) {
+			childrenidlist = childrenids.split(",");
+		}
+		int[] childrenary = new int[childrenidlist.length];
+		try {
+			for(int i=0;i<childrenidlist.length;i++) {
+				childrenary[i] = Integer.valueOf(childrenidlist[i]);
+			}
+		}catch (NumberFormatException e) {
+			System.out.print(e);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			result.errorResult(400, "提交的数据校验失败");
+			result.setMsg("childrenid过长");
+			return result;
+		}
+		sysResourceService.treedrag(result, parentid, childrenary);
 		return result;
 	}
 }
