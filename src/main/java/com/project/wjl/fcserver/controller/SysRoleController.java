@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 import com.project.wjl.fcserver.model.SysRole;
-import com.project.wjl.fcserver.model.SysUser;
 import com.project.wjl.fcserver.service.SysRoleService;
 import com.project.wjl.fcserver.util.Result;
 import com.project.wjl.fcserver.validate.group.AddGroup;

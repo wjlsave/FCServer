@@ -9,15 +9,23 @@ import com.project.wjl.fcserver.model.SysResource;
 
 @Mapper
 public interface SysResourceMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insertSelective(SysResource record);
+    
 
     SysResource selectByPrimaryKey(Integer id);
     
     List<SysResource> selectByUserid(Integer userid);
+    
+    List<Integer> selectApilistByResourceid(Integer resourceid);
 
     List<SysResource> queryByTree(SysResource record);
+    
+    int deleteByPrimaryKey(Integer id);
+    
+    int deleteRelationByResourceid(Integer resourceid);
+
+    int insertSelective(SysResource record);
+    
+    int insertApisBatch(@Param("resourceid")Integer resourceid,@Param("apilist")int[] apilist);
 
     int updateByPrimaryKeySelective(SysResource record);
     

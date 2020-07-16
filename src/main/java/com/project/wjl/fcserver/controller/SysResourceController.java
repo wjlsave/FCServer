@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.wjl.fcserver.model.SysResource;
+import com.project.wjl.fcserver.model.SysUser;
 import com.project.wjl.fcserver.service.SysResourceService;
 import com.project.wjl.fcserver.util.Result;
 import com.project.wjl.fcserver.validate.group.AddGroup;
@@ -43,6 +44,12 @@ public class SysResourceController {
 	@RequestMapping(value = "detail",method = RequestMethod.GET)
 	public Result<SysResource> detail(Result<SysResource> result,@NotNull(message = "id不能为空")Integer id){
 		result = sysResourceService.detail(result, id);
+		return result;
+	}
+	
+	@RequestMapping(value = "getresourceapis",method = RequestMethod.GET)
+	public Result<List<Integer>> getresourceapis(Result<List<Integer>> result,@NotNull(message = "id不能为空")Integer id){
+		result = sysResourceService.getresourceapis(result, id);
 		return result;
 	}
 	
@@ -83,6 +90,28 @@ public class SysResourceController {
 			return result;
 		}
 		sysResourceService.treedrag(result, parentid, childrenary);
+		return result;
+	}
+	
+	@RequestMapping(value = "setapis",method = RequestMethod.POST)
+	public Result<Boolean> setapis(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "id不能为空")Integer id,@Pattern(message = "apiids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String apiids){
+		String[] apilist = {};
+		if(apiids!=null) {
+			apilist = apiids.split(",");
+		}
+		int[] apiidary = new int[apilist.length];
+		try {
+			for(int i=0;i<apilist.length;i++) {
+				apiidary[i] = Integer.valueOf(apilist[i]);
+			}
+		}catch (NumberFormatException e) {
+			System.out.print(e);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			result.errorResult(400, "提交的数据校验失败");
+			result.setMsg("apiid过长");
+			return result;
+		}
+		sysResourceService.setapis(result, id, apiidary);
 		return result;
 	}
 }

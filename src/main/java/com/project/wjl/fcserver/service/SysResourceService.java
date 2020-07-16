@@ -32,6 +32,12 @@ public class SysResourceService {
 		return result;
 	}
 	
+	public Result<List<Integer>> getresourceapis(Result<List<Integer>> result,Integer resourceid){
+		List<Integer> apis = sysResourceMapper.selectApilistByResourceid(resourceid);
+		result.setData(apis);
+		return result;
+	}
+	
 	public Result<SysResource> detail(Result<SysResource> result,Integer id){
 		SysResource sysResource = sysResourceMapper.selectByPrimaryKey(id);
 		if(sysResource==null) {
@@ -65,6 +71,15 @@ public class SysResourceService {
 	
 	public Result<Boolean> edit(Result<Boolean> result,SysResource record){
 		sysResourceMapper.updateByPrimaryKeySelective(record);
+		return result;
+	}
+	
+	@Transactional
+	public Result<Boolean> setapis(Result<Boolean> result,Integer resourceid,int[] apiary){
+		sysResourceMapper.deleteRelationByResourceid(resourceid);
+		if(apiary.length>0) {
+			sysResourceMapper.insertApisBatch(resourceid, apiary);
+		}
 		return result;
 	}
 	

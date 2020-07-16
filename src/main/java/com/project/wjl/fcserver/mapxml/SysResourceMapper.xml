@@ -27,6 +27,13 @@
 	WHERE c.`user_id` = #{userid,jdbcType=INTEGER}
 	order by a.sort
   </select>
+  
+  <select id="selectApilistByResourceid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    api_id
+    from sys_resource_api_relation
+    where resource_id = #{resourceid,jdbcType=INTEGER}
+  </select>
 
 <select id="queryByTree" parameterType="com.project.wjl.fcserver.model.SysResource" resultMap="BaseResultMap">
     select 
@@ -46,6 +53,10 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_resource
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteRelationByResourceid" parameterType="java.lang.Integer">
+    delete from sys_resource_api_relation
+    where resource_id = #{resourceid,jdbcType=INTEGER}
   </delete>
   <insert id="insertSelective" parameterType="com.project.wjl.fcserver.model.SysResource">
     insert into sys_resource
@@ -95,6 +106,14 @@
         #{sort,jdbcType=INTEGER},
       </if>
     </trim>
+  </insert>
+  <insert id="insertApisBatch">
+	INSERT INTO sys_resource_api_relation
+	(resource_id, api_id)
+	VALUES
+    <foreach collection ="apilist" item="apiid" separator =",">
+         (#{resourceid,jdbcType=INTEGER}, #{apiid,jdbcType=INTEGER})
+    </foreach >
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.project.wjl.fcserver.model.SysResource">
     update sys_resource
