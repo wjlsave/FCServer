@@ -46,9 +46,9 @@ public class SysRoleController {
 	}
 	
 	@RequestMapping(value = "add",method = RequestMethod.POST)
-	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String resourceids){
+	public Result<Boolean> add(HttpServletResponse response,Result<Boolean> result,@Validated(AddGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^([1-9][0-9]*(,[1-9][0-9]*)*)*$")String resourceids){
 		String[] resourceidlist = {};
-		if(resourceids!=null) {
+		if(resourceids!=null&&!resourceids.equals("")) {
 			resourceidlist = resourceids.split(",");
 		}
 		int[] resourceidary = new int[resourceidlist.length];
@@ -69,9 +69,9 @@ public class SysRoleController {
 	}
 	
 	@RequestMapping(value = "edit",method = RequestMethod.POST)
-	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String resourceids){
+	public Result<Boolean> edit(HttpServletResponse response,Result<Boolean> result,@Validated(EditGroup.class)SysRole record,@Pattern(message = "resourceids格式不正确",regexp="^([1-9][0-9]*(,[1-9][0-9]*)*)*$")String resourceids){
 		String[] resourceidlist = {};
-		if(resourceids!=null) {
+		if(resourceids!=null&&!resourceids.equals("")) {
 			resourceidlist = resourceids.split(",");
 		}
 		int[] resourceidary = new int[resourceidlist.length];

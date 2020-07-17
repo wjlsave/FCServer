@@ -1,0 +1,7 @@
+{"properties": [
+  {
+    "name": "app.defaultPassword",
+    "type": "java.lang.String",
+    "description": "默认管理台账户密码"
+  }
+]}

@@ -4,6 +4,7 @@ package com.project.wjl.fcserver.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -36,8 +37,9 @@ public class SysResourceController {
 	}
 	
 	@RequestMapping(value = "getuserresource",method = RequestMethod.GET)
-	public Result<List<SysResource>> getuserresource(Result<List<SysResource>> result,@NotNull(message = "userid不能为空")Integer userid){
-		result = sysResourceService.getuserresource(result, userid);
+	public Result<List<SysResource>> getuserresource(HttpServletRequest request,Result<List<SysResource>> result){
+		SysUser sysUser = (SysUser)request.getAttribute("sysUser");
+		result = sysResourceService.getuserresource(result, sysUser.getId());
 		return result;
 	}
 	
@@ -72,9 +74,9 @@ public class SysResourceController {
 	}
 	
 	@RequestMapping(value = "treedrag",method = RequestMethod.POST)
-	public Result<Boolean> treedrag(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "parentid不能为空")Integer parentid,@Pattern(message = "childrenids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String childrenids){
+	public Result<Boolean> treedrag(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "parentid不能为空")Integer parentid,@Pattern(message = "childrenids格式不正确",regexp="^([1-9][0-9]*(,[1-9][0-9]*)*)*$")String childrenids){
 		String[] childrenidlist = {};
-		if(childrenids!=null) {
+		if(childrenids!=null&&!childrenids.equals("")) {
 			childrenidlist = childrenids.split(",");
 		}
 		int[] childrenary = new int[childrenidlist.length];
@@ -94,9 +96,9 @@ public class SysResourceController {
 	}
 	
 	@RequestMapping(value = "setapis",method = RequestMethod.POST)
-	public Result<Boolean> setapis(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "id不能为空")Integer id,@Pattern(message = "apiids格式不正确",regexp="^[1-9][0-9]*(,[1-9][0-9]*)*$")String apiids){
+	public Result<Boolean> setapis(HttpServletResponse response,Result<Boolean> result,@NotNull(message = "id不能为空")Integer id,@Pattern(message = "apiids格式不正确",regexp="^([1-9][0-9]*(,[1-9][0-9]*)*)*$")String apiids){
 		String[] apilist = {};
-		if(apiids!=null) {
+		if(apiids!=null&&!apiids.equals("")) {
 			apilist = apiids.split(",");
 		}
 		int[] apiidary = new int[apilist.length];
