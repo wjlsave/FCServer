@@ -2,6 +2,7 @@ package com.project.wjl.fcserver.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +36,8 @@ public class LoginService {
 			result.setData(token);
 			sysUser.setLastLoginTime(new Date());
 			sysUserMapper.updateByPrimaryKeySelective(sysUser);
+			List<String> apis = sysUserMapper.selectApiByUserid(sysUser.getId());
+			sysUser.setApis(apis);
 			redisTemplate.opsForValue().set("USER_"+token, sysUser, 60 * 10, TimeUnit.SECONDS);
 		}
 		return result;

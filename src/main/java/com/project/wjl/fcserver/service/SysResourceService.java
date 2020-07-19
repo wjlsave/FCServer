@@ -1,6 +1,7 @@
 package com.project.wjl.fcserver.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -25,11 +26,10 @@ public class SysResourceService {
 		return result;
 	}
 	
-	public Result<List<SysResource>> getuserresource(Result<List<SysResource>> result,Integer userid){
+	public List<SysResource> getuserresource(Integer userid){
 		List<SysResource> sysResources = sysResourceMapper.selectByUserid(userid);
 		List<SysResource> tree = TreeUtils.buildTreeNodes(sysResources, 0l);
-		result.setData(tree);
-		return result;
+		return tree;
 	}
 	
 	public Result<List<Integer>> getresourceapis(Result<List<Integer>> result,Integer resourceid){

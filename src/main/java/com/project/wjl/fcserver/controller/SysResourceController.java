@@ -1,7 +1,9 @@
 package com.project.wjl.fcserver.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +39,13 @@ public class SysResourceController {
 	}
 	
 	@RequestMapping(value = "getuserresource",method = RequestMethod.GET)
-	public Result<List<SysResource>> getuserresource(HttpServletRequest request,Result<List<SysResource>> result){
+	public Result<Map<String,Object>> getuserresource(HttpServletRequest request,Result<Map<String,Object>> result){
 		SysUser sysUser = (SysUser)request.getAttribute("sysUser");
-		result = sysResourceService.getuserresource(result, sysUser.getId());
+		List<SysResource> sysResources = sysResourceService.getuserresource(sysUser.getId());
+		Map<String,Object> map =new HashMap<String, Object>();
+		map.put("sysUser", sysUser);
+		map.put("sysResources", sysResources);
+		result.setData(map);
 		return result;
 	}
 	

@@ -17,18 +17,14 @@ public class LoginController {
 	@Resource
 	private LoginService loginService;
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping("login")
 	public Result<String> login(Result<String> result,String account,String password){
 		result = loginService.login(result, account, password);
 		return result;
 	}
 	
-	@CrossOrigin(origins = "*", maxAge = 3600)
-	@RequestMapping("getuserinfo")
-	public Result<SysUser> getUserinfo(Result<SysUser> result,HttpServletRequest request){
-		SysUser sysUser = (SysUser)request.getAttribute("sysUser");
-		result.setData(sysUser);
+	@RequestMapping("loginOut")
+	public Result<Boolean> getUserinfo(Result<Boolean> result){
  		return result;
 	}
 }

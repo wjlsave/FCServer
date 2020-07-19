@@ -51,4 +51,9 @@ public class SysApiService {
 		return result;
 	}
 	
+	public List<SysApi> selectAllApis() {
+		SysApi record = new SysApi();
+		List<SysApi> apis = sysApiMapper.queryByPage(record);
+		return apis;
+	}
 }

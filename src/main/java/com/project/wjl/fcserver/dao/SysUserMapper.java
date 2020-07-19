@@ -14,6 +14,8 @@ public interface SysUserMapper {
     
     List<Integer> selectRolelistByUserid(Integer userid);
     
+    List<String> selectApiByUserid(Integer userid);
+    
     SysUser selectByAccount(String account);
     
     List<SysUser> queryByPage(SysUser record); 

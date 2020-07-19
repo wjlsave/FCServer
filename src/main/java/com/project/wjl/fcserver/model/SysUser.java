@@ -44,6 +44,8 @@ public class SysUser implements Serializable{
     private Date createTime;
     
     private List<Integer> roleids;
+    
+    private List<String> apis;
 
     public Integer getId() {
         return id;
@@ -107,6 +109,14 @@ public class SysUser implements Serializable{
 
 	public void setRoleids(List<Integer> roleids) {
 		this.roleids = roleids;
+	}
+
+	public List<String> getApis() {
+		return apis;
+	}
+
+	public void setApis(List<String> apis) {
+		this.apis = apis;
 	}
 
 }

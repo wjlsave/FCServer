@@ -27,6 +27,14 @@
     where user_id = #{userid,jdbcType=INTEGER}
   </select>
   
+  <select id="selectApiByUserid" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	SELECT a.api_path FROM sys_api a
+	LEFT JOIN sys_resource_api_relation b ON a.id=b.api_id
+	LEFT JOIN sys_role_resource_relation c ON b.resource_id =c.resource_id
+	LEFT JOIN sys_user_role_relation d ON c.role_id=d.role_id
+	WHERE d.user_id=#{userid,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

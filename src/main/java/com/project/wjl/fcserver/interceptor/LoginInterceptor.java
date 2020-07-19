@@ -13,8 +13,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.wjl.fcserver.model.SysUser;
+import com.project.wjl.fcserver.util.Result;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 	
 	@Resource
@@ -31,11 +35,19 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if(token == null || token.isEmpty()||!redisTemplate.hasKey("USER_"+token)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return false;
-		}else {
-			SysUser sysUser = (SysUser)redisTemplate.opsForValue().get("USER_"+token);
-			redisTemplate.expire("USER_"+token, 60 * 60 *24, TimeUnit.SECONDS);
-			request.setAttribute("sysUser", sysUser);
 		}
+		String apiPath = request.getServletPath();
+		if(apiPath.equals("//loginOut")) {
+			redisTemplate.delete("USER_"+token);
+			return true;
+		}
+		SysUser sysUser = (SysUser)redisTemplate.opsForValue().get("USER_"+token);
+		if(redisTemplate.hasKey("API_PATH_"+apiPath)&&!sysUser.getApis().contains(apiPath)) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return false;
+		}
+		redisTemplate.expire("USER_"+token, 60 * 60 *24, TimeUnit.SECONDS);
+		request.setAttribute("sysUser", sysUser);
 		return true;
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- <property name="logger.path" value="/Users/mac/Documents/Logs/clientlog" /> -->
-    <property name="logger.path" value="d:/document/logs/mine" />
+    <property name="logger.path" value="/Users/mac/Documents/Logs/clientlog" />
+    <!-- <property name="logger.path" value="d:/document/logs/mine" /> -->
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
